@@ -12,10 +12,7 @@ export default function SignIn() {
   const [pwd, setPwd] = useState("");
   const [remember, setRemember] = useState(false);
 
-  useEffect(
-    () => setAlert(state.alert as AlertType),
-    [state?.alert, setAlert]
-  );
+  useEffect(() => setAlert(state?.alert as AlertType || {}), [state?.alert, setAlert]);
 
   useEffect(() => setTitle("sign in"), [setTitle]);
 

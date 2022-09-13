@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { useOutletContext, useLocation } from "react-router-dom";
 import { isValidEmail } from "../../helpers";
 import { Button, Input, Link } from "../../components";
-import { StateType, useOutletContextProps, AlertType } from "../../interfaces/helpers";
+import {
+  StateType,
+  useOutletContextProps,
+  AlertType,
+} from "../../interfaces/helpers";
 
 export default function ConfirmSignUp() {
   const location = useLocation();
@@ -16,7 +20,7 @@ export default function ConfirmSignUp() {
   const [email, setEmail] = useState(state?.email || "");
   const [code, setCode] = useState("");
 
-  useEffect(() => setAlert(state.alert as AlertType), [state?.alert, setAlert]);
+  useEffect(() => setAlert(state?.alert as AlertType || {}), [state?.alert, setAlert]);
 
   useEffect(() => setTitle("confirm registration"), [setTitle]);
 
