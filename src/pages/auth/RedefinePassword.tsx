@@ -64,6 +64,7 @@ export default function RedefinePassword() {
           text="Redefine Password"
           disabled={disabled()}
           handler={() => redefinePassword(email, code, pwd)}
+          full
         />
       </div>
       <div className="w-full text-center mt-4">

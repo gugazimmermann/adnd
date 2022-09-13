@@ -53,6 +53,7 @@ export default function SignUp() {
           text="Sign Up"
           disabled={disabled()}
           handler={() => signUp(email, pwd)}
+          full
         />
       </div>
       <div className="w-full text-center mt-4">
