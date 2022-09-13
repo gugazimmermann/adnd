@@ -36,7 +36,7 @@ export default function Layout() {
     <main className="layout h-screen container mx-auto max-w-5xl">
       {loading && <Loading />}
       <Nav handleSignOut={handleSignOut} />
-      <div className="p-4">
+      <div className="layout p-4">
         <Outlet context={{ user, loadUser, setLoading }} />
       </div>
     </main>
