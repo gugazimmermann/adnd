@@ -6,8 +6,10 @@ const Theme = () => {
   const [theme, setTheme] = useState("light");
 
   const changeTheme = () => {
-    const storage = JSON.parse(localStorage.getItem(ls) || "");
-    const newTheme = storage.theme === "light" ? "dark" : "light";
+    let storage = null;
+    const getStorage = localStorage.getItem(ls);
+    if (getStorage) storage = JSON.parse(getStorage);
+    const newTheme = storage?.theme === "light" ? "dark" : "light";
     localStorage.setItem(ls, JSON.stringify({ ...storage, theme: newTheme }));
     setTheme(newTheme);
   };
@@ -19,9 +21,10 @@ const Theme = () => {
 
   useEffect(() => {
     const seeLocalStorageMode = () => {
-      const storage = JSON.parse(localStorage.getItem(ls) || "");
-      if (!storage)
-        localStorage.setItem(ls, JSON.stringify({ theme: "light" }));
+      let storage = null;
+      const getStorage = localStorage.getItem(ls);
+      if (getStorage) storage = JSON.parse(getStorage);
+      if (!storage) localStorage.setItem(ls, JSON.stringify({ theme: "light" }));
       setTheme(storage?.theme ? storage.theme : "light");
     };
     seeLocalStorageMode();
