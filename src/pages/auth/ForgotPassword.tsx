@@ -27,6 +27,7 @@ export default function ForgorPassword() {
           text="Send Code"
           disabled={disabled()}
           handler={() => sendForgotPasswordCode(email)}
+          full
         />
       </div>
       <div className="w-full text-center mt-4">

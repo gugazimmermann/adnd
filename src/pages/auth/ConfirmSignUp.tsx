@@ -50,6 +50,7 @@ export default function ConfirmSignUp() {
           text="Confim"
           disabled={disabled()}
           handler={() => confirmSignUp(email, code)}
+          full
         />
       </div>
       <div className="w-full text-center mt-4">
