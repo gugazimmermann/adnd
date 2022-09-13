@@ -8,7 +8,7 @@ export type CognitoUserType = {
   email_verified: boolean;
   locale: string;
   email: string;
-}
+};
 
 export type useOutletContextProps = {
   setAlert: (alert: AlertType) => void;
@@ -19,9 +19,31 @@ export type useOutletContextProps = {
   resendConfirmationCode: (email: string) => void;
   confirmSignUp: (email: string, code: string) => void;
   signUp: (email: string, pwd: string) => void;
-}
+};
 
 export type StateType = {
   email?: string;
   alert?: AlertType;
-}
+};
+
+export type DicesType =
+  | "d2"
+  | "d4"
+  | "d6"
+  | "d8"
+  | "d10"
+  | "d12"
+  | "d20"
+  | "d100";
+
+export type AttributeType =
+  | "Strength"
+  | "Dexterity"
+  | "Constitution"
+  | "Intelligence"
+  | "Wisdom"
+  | "Charisma";
+
+export type AttributesType = {
+  [key in AttributeType]: number;
+};

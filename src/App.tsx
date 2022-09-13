@@ -14,6 +14,8 @@ const Layout = lazy(() => import("./pages/layout/Layout"));
 const Home = lazy(() => import("./pages/home/Home"));
 const Profile = lazy(() => import("./pages/profile/Profile"));
 
+const Attributes = lazy(() => import("./pages/character-creation/Attributes"));
+
 function App() {
   return (
     <Suspense fallback={<Loading />}>
@@ -28,6 +30,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/character-creation/atrributes" element={<Attributes />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
