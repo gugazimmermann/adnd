@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  @apply bg-stone-200 dark:bg-stone-700 text-slate-700 dark:text-slate-300;
+}
+
+.layout {
+  @apply bg-stone-100 dark:bg-stone-600
+}
