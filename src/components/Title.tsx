@@ -8,14 +8,18 @@ type TitleProps = {
 
 const Title = ({ text, className, back }: TitleProps) => {
   return (
-    <h1 className={`${!className ? "mb-2 text-base text-center" : className}`}>
+    <div className="flex">
       {back && (
-        <Link to={back}>
-          <i className="bx bx-left-arrow-circle mr-2" />
+        <Link to={back} className="flex-none">
+          <i className="bx bx-left-arrow-circle text-xl" />
         </Link>
       )}
-      {text.toLocaleUpperCase()}
-    </h1>
+      <h1
+        className={`flex-auto ${!className ? "text-base text-center" : className}`}
+      >
+        {text.toLocaleUpperCase()}
+      </h1>
+    </div>
   );
 };
 
