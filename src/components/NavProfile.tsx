@@ -20,7 +20,7 @@ const NavProfile = ({ handleSignOut }: NavProfileProps) => {
       ref={ref}
       className={`${
         open ? "absolute" : "hidden"
-      } list-style-none w-48 right-0 top-9 border bg-white z-50`}
+      } list-style-none w-48 right-0 top-9 border inverted z-50`}
     >
       <li className="p-2 text-center">
         <Link to="/profile">Profile</Link>
