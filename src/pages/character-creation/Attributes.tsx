@@ -27,8 +27,20 @@ export default function Attributes() {
 
   useEffect(() => {
     const getAttributes = LocalStorage.GetItem("attributes", true);
-    if (!getAttributes) navigate('/home');
-    setAttributes(getAttributes as AttributesType[]);
+    if (!getAttributes) navigate("/home");
+    const getAttr = getAttributes as AttributesType[];
+    if (process.env.NODE_ENV === "development") {
+      const cheat = {
+        Strength: 18,
+        Dexterity: 18,
+        Constitution: 18,
+        Intelligence: 18,
+        Wisdom: 18,
+        Charisma: 18,
+      };
+      getAttr.push(cheat);
+    }
+    setAttributes(getAttr);
   }, [navigate]);
 
   const showAttrTable = (a: AttributeType, v: number) => {
@@ -43,6 +55,7 @@ export default function Attributes() {
   const handleSelectAttributes = (i: number) => {
     setSelectedSet(i);
     setSelectedAttributes(attributes[i]);
+    LocalStorage.Save('char', {attributes: attributes[i]}, true);
   };
 
   const renderRadio = (i: number) => (
