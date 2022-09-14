@@ -30,7 +30,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/character-creation/atrributes" element={<Attributes />} />
+          <Route path="/character-creation/attributes" element={<Attributes />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

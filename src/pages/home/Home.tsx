@@ -40,7 +40,7 @@ export default function Home() {
         First you must create your character, let's get started.
       </p>
       <div className="text-center">
-        <Button text="Character Creation" handler={() => navigate("/character-creation/atrributes")} />
+        <Button text="Character Creation" handler={() => navigate("/character-creation/attributes")} />
       </div>
     </section>
   );
