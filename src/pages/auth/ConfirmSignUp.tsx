@@ -6,7 +6,7 @@ import {
   StateType,
   useOutletContextProps,
   AlertType,
-} from "../../interfaces/helpers";
+} from "../../interfaces";
 
 export default function ConfirmSignUp() {
   const location = useLocation();

@@ -1,3 +1,5 @@
+export type GenericObject = { [key: string]: any };
+
 export type AlertType = {
   type?: "error" | "info" | "success";
   text?: string;
@@ -46,4 +48,15 @@ export type AttributeType =
 
 export type AttributesType = {
   [key in AttributeType]: number;
+};
+
+export type ContentTableRowType = string[];
+
+export type ContentTableType = {
+  header: string[];
+  rows: ContentTableRowType[];
+};
+
+export type JsonContentType = {
+  [key: string]: ContentTableType;
 };

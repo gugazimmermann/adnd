@@ -1,5 +1,5 @@
 import _ from 'underscore';
-import { DicesType } from '../interfaces/helpers';
+import { DicesType } from '../interfaces';
 
 const rowDice = (dice: DicesType) => {
   switch (dice) {

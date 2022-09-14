@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import Auth from "../../api/auth";
 import { Alert, Loading, Theme, Title } from "../../components";
-import { AlertType } from "../../interfaces/helpers";
+import { AlertType } from "../../interfaces";
 
 export default function AuthLayout() {
   const navigate = useNavigate();
