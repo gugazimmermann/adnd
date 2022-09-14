@@ -1,3 +1,5 @@
+export type GenericObject = { [key: string]: any };
+
 export type AlertType = {
   type?: "error" | "info" | "success";
   text?: string;
