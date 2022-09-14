@@ -1,0 +1,92 @@
+[
+  {
+    "type": "Warrior",
+    "name": "Fighter",
+    "requiremt": {
+      "strength": 9
+    },
+    "requisites": ["strength"]
+  },
+  {
+    "type": "Warrior",
+    "name": "Ranger",
+    "requiremt": {
+      "strength": 13,
+      "dexterity": 13,
+      "constituion": 14,
+      "wisdom": 14
+    },
+    "requisite": ["strength", "dexterity", "wisdom"]
+  },
+  {
+    "type": "Warrior",
+    "name": "Paladin",
+    "requiremt": {
+      "strength": 12,
+      "constituion": 9,
+      "wisdom": 13,
+      "charisma": 17
+    },
+    "requisite": ["strength", "charisma"]
+  },
+  {
+    "type": "Wizard",
+    "name": "Mage",
+    "requiremt": {
+      "intelligence": 9
+    },
+    "requisite": ["intelligence"]
+  },
+  {
+    "type": "Wizard",
+    "name": "Specialist",
+    "requiremt": {
+      "intelligence": 9
+    },
+    "requisite": ["intelligence"]
+  },
+  {
+    "type": "Wizard",
+    "name": "Illusionist",
+    "requiremt": {
+      "intelligence": 9,
+      "dexterity": 16
+    },
+    "requisite": ["intelligence"]
+  },
+  {
+    "type": "Priest",
+    "name": "Cleric",
+    "requiremt": {
+      "wisdom": 9
+    },
+    "requisite": ["wisdom"]
+  },
+  {
+    "type": "Priest",
+    "name": "Druid",
+    "requiremt": {
+      "wisdom": 12,
+      "charisma": 15
+    },
+    "requisite": ["wisdom", "charisma"]
+  },
+  {
+    "type": "Rogue",
+    "name": "Thief",
+    "requiremt": {
+      "dexterity": 9
+    },
+    "requisite": ["dexterity"]
+  },
+  {
+    "type": "Rogue",
+    "name": "Bard",
+    "requiremt": {
+      "dexterity": 12,
+      "intelligence": 13,
+      "charisma": 15
+    },
+    "requisite": ["dexterity", "charisma"]
+  }
+]
