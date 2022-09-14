@@ -43,9 +43,7 @@ const AttributesModal = ({
                     <td
                       key={uuidv4()}
                       className={`text-center border border-slate-800 ${
-                        i === 0 &&
-                        value === +td &&
-                        "bg-stone-700 dark:bg-stone-200 text-slate-300 dark:text-slate-700 font-bold"
+                        i === 0 && value === +td && "inverted font-bold"
                       }`}
                     >
                       {td}
