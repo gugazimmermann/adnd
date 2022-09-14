@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { AlertType } from "../interfaces/helpers";
+import { AlertType } from "../interfaces";
 
 const Alert = ({ type, text }: AlertType): ReactElement | null => {
   if (text) {

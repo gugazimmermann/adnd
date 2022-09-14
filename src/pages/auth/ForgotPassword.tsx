@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { isValidEmail } from "../../helpers";
 import { Button, Input, Link } from "../../components";
-import { useOutletContextProps } from "../../interfaces/helpers";
+import { useOutletContextProps } from "../../interfaces";
 
 export default function ForgorPassword() {
   const { setTitle, sendForgotPasswordCode }: useOutletContextProps = useOutletContext();
