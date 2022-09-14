@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { Button, Title } from "../../components";
-import { ContentRaceType } from "../../interfaces";
+import { AbilityAdjustmentsType, ContentRaceType } from "../../interfaces";
 import contentJson from "../../content/races.json";
-import { ShowList } from "../../helpers";
+import { CapitalizeFirstLetter, ShowList } from "../../helpers";
 
 const STORAGE_PUBLIC = process.env.REACT_APP_STORAGE_PUBLIC || "";
 
@@ -21,6 +21,15 @@ export default function Races() {
   const handleSelectRace = (i: number) => {
     setSelectedRace(i);
     setRace(races[i]);
+  };
+
+  const handleAttrAdj = (
+    abilityAdjustments: AbilityAdjustmentsType[]
+  ): string => {
+    let adj = abilityAdjustments.map((a) => {
+      return `${CapitalizeFirstLetter(a.name)}: ${a.value}`;
+    });
+    return adj.join(", ");
   };
 
   return (
@@ -51,36 +60,43 @@ export default function Races() {
                 className="w-2/12 mr-2 object-contain"
               />
               <div className="w-10/12 flex flex-col gap-2 items-start">
-                  <h2 className="font-bold text-lg">{r.name}</h2>
+                <h2 className="font-bold text-lg">{r.name}</h2>
+                <p className="text-sm">
+                  <span className="font-bold">Description</span>: Click Here
+                </p>
+                <p className="text-sm">
+                  <span className="font-bold">Attributes Adjustments</span>:{" "}
+                  <button type="button" className="cursor-pointer mt-1">
+                    <i className="bx bx-help-circle" />
+                  </button>{" "}
+                  {handleAttrAdj(r["ability-adjustments"])}
+                </p>
+                <p className="text-sm">
+                  <span className="font-bold">Clases</span>:{" "}
+                  {ShowList(r.classes)}
+                </p>
+                <p className="text-sm">
+                  <span className="font-bold">Languages</span>:{" "}
+                  {ShowList(r.languages)}
+                </p>
+                {!!r.advantages.length && (
                   <p className="text-sm">
-                    <span className="font-bold">Description</span>: Click Here
+                    <span className="font-bold">Advantages</span>:{" "}
+                    {ShowList(r.advantages)}
                   </p>
+                )}
+                {!!r.disadvantages.length && (
                   <p className="text-sm">
-                    <span className="font-bold">Clases</span>:{" "}
-                    {ShowList(r.classes)}
+                    <span className="font-bold">Disadvantages</span>:{" "}
+                    {ShowList(r.disadvantages)}
                   </p>
+                )}
+                {!!r["favorite-enemies"].length && (
                   <p className="text-sm">
-                    <span className="font-bold">Languages</span>:{" "}
-                    {ShowList(r.languages)}
+                    <span className="font-bold">Favorite Enemies</span>:{" "}
+                    {ShowList(r["favorite-enemies"])}
                   </p>
-                  {!!r.advantages.length && (
-                    <p className="text-sm">
-                      <span className="font-bold">Advantages</span>:{" "}
-                      {ShowList(r.advantages)}
-                    </p>
-                  )}
-                  {!!r.disadvantages.length && (
-                    <p className="text-sm">
-                      <span className="font-bold">Disadvantages</span>:{" "}
-                      {ShowList(r.disadvantages)}
-                    </p>
-                  )}
-                  {!!r["favorite-enemies"].length && (
-                    <p className="text-sm">
-                      <span className="font-bold">Favorite Enemies</span>:{" "}
-                      {ShowList(r["favorite-enemies"])}
-                    </p>
-                  )}
+                )}
                 <div className="form-group form-check flex flex-row justify-center my-4">
                   <input
                     type="radio"
@@ -91,7 +107,7 @@ export default function Races() {
                     className="form-radio h-4 w-4 rounded-sm text-red-600 bg-stone-100 border border-stone-400 focus:outline-none focus:ring-offset-0 focus:ring-0 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                   />
                   <label
-                    className="form-radio-label inline-block"
+                    className="form-radio-label inline-block font-bold"
                     htmlFor="attributesSet"
                   >
                     Play as a {r.name}
