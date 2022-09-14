@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { Loading } from "./components";
 
 const NotFound = lazy(() => import("./pages/not-found/NotFound"));
@@ -15,6 +15,7 @@ const Home = lazy(() => import("./pages/home/Home"));
 const Profile = lazy(() => import("./pages/profile/Profile"));
 
 const Attributes = lazy(() => import("./pages/character-creation/Attributes"));
+const Races = lazy(() => import("./pages/character-creation/Races"));
 
 function App() {
   return (
@@ -30,7 +31,9 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/character-creation" element={<Navigate to="/home" replace />} />
           <Route path="/character-creation/attributes" element={<Attributes />} />
+          <Route path="/character-creation/races" element={<Races />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
