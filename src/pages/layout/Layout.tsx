@@ -15,7 +15,6 @@ export default function Layout() {
         setLoading(true);
         try {
           const attributes = await Auth.GetUser();
-          console.log(attributes);
           setUser(attributes);
           setLoading(false);
         } catch (error) {
