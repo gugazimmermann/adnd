@@ -1,82 +1,78 @@
 import { useEffect, useState, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import LocalStorage from "../../api/local-storage";
-import { CharType, ContentRaceType } from "../../ts/types";
-import { Button, Title } from "../../components";
+import {
+  CharacterCreationContextType,
+  CharType,
+  ContentRaceType,
+} from "../../ts/types";
 import RacesCard from "./RacesCard";
-import CharacterModal from "./CharacterModal";
 import contentJson from "../../content/races.json";
 
 export default function Races() {
   const navigate = useNavigate();
+  const {
+    setTitle,
+    setBack,
+    setDescription,
+    setButtonText,
+    setButtonDisabled,
+    setForward,
+  } = useOutletContext<CharacterCreationContextType>();
   const [character, setCharacter] = useState<CharType>();
-  const [showCharModal, setShowCharModal] = useState<boolean>(false);
-  const [races, setRaces] = useState<ContentRaceType[]>([]);
   const [selectedRace, setSelectedRace] = useState<number>(99);
   const [race, setRace] = useState<ContentRaceType>();
 
-  const getChar = useCallback(() => {
+  const handleSelectRace = (i: number) => {
+    setSelectedRace(i);
+    setRace(contentJson[i]);
+    LocalStorage.Save("char", { ...character, race: contentJson[i].name }, true);
+  };
+
+  const setLayoutContent = useCallback(() => {
+    setTitle("Races");
+    setBack("/character-creation/attributes");
+    setDescription(
+      "Now you need to choose your Character's Race, choose carefully, as this will reflect on the Class you will have to choose.\n\nEach race has different characteristics, far beyond appearance, they have natural advantages and disadvantages and can change attributes."
+    );
+    setButtonText("Continue to Classes");
+    setButtonDisabled(!race);
+    setForward("/character-creation/classes");
+  }, [
+    race,
+    setBack,
+    setButtonDisabled,
+    setButtonText,
+    setDescription,
+    setForward,
+    setTitle,
+  ]);
+
+  const getCharacter = useCallback(() => {
     const char = LocalStorage.GetItem("char", true);
     if (!char) navigate("/home");
     setCharacter(char as CharType);
   }, [navigate]);
 
   useEffect(() => {
-    setRaces(contentJson);
-    getChar();
-  }, [getChar]);
-
-  const handleSelectRace = (i: number) => {
-    setSelectedRace(i);
-    setRace(races[i]);
-    LocalStorage.Save("char", { ...character, race: races[i].name }, true);
-  };
+    setLayoutContent();
+    getCharacter();
+  }, [getCharacter, setLayoutContent]);
 
   return (
-    <section className="relative">
-      <Title
-        text="Races"
-        className="font-bold text-xl text-center"
-        back="/character-creation/attributes"
-      />
-      <div className="absolute top-0 right-0">
-        <button type="button" onClick={() => setShowCharModal(true)}>
-          <i className="bx bx-spreadsheet text-2xl" />
-        </button>
-      </div>
-      <p className="mb-4 mt-4">
-        Now you need to choose your Character's Race, choose carefully, as this
-        will reflect on the Class you will have to choose.
-      </p>
-      <p className="mb-4">
-        Each race has different characteristics, far beyond appearance, they
-        have natural advantages and disadvantages and can change attributes.
-      </p>
+    <>
       <div className="grid sm:grid-cols-1 gap-4 mx-2">
-        {races.map((race, index) => (
+        {contentJson.map((race, index) => (
           <RacesCard
             key={race.name.toLocaleLowerCase()}
             race={race}
             index={index}
             selectedRace={selectedRace}
             handleSelectRace={handleSelectRace}
-            character={character}
+            attributes={character?.attributes}
           />
         ))}
       </div>
-      <div className="text-center mt-4 mb-4">
-        <Button
-          text="Continue to Classes"
-          handler={() => navigate("/character-creation/classes")}
-          disabled={!race}
-        />
-      </div>
-      {showCharModal && character && (
-        <CharacterModal
-          show={showCharModal}
-          setShow={setShowCharModal}
-        />
-      )}
-    </section>
+    </>
   );
 }
