@@ -41,7 +41,7 @@ export type ContentTableType = {
   rows: ContentTableRowType[];
 };
 
-export type JsonContentType = {
+export type JsonContentTableType = {
   [key: string]: ContentTableType;
 };
 
