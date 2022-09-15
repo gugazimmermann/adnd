@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import LocalStorage from "../../api/local-storage";
 import { CharType } from "../../ts/types";
-import { Button } from "../../components";
+import { Button, Title } from "../../components";
 import AttributesCard from "./AttributesCard";
 import contentJson from "../../content/races.json";
 import { ATTRIBUTE } from "../../ts/enums";
@@ -40,15 +40,16 @@ const CharacterModal = ({ show, setShow }: AttributesModalProps) => {
     >
       <div className="z-50 p-4 overflow-auto w-full">
         <div className="layout rounded-md shadow-md p-2 flex flex-col justify-start items-center">
-          {character?.race && (
-            <div>
+          <Title text="Character Sheet" className="font-bold text-xl text-center mb-4" />
+          {character?.attributes && (
+            <div className="mb-4">
               <h2 className="text-center font-bold mb-2">Attributes</h2>
               <AttributesCard attributes={character.attributes} />
             </div>
           )}
           {character?.race && (
-            <div>
-              <h2>Race: {character?.race}</h2>
+            <div className="mb-4">
+              <h2><span className="font-bold ">Race</span>: {character?.race}</h2>
             </div>
           )}
           <div className="my-4 w-6/12">
