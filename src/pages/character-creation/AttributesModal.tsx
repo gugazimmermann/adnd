@@ -18,43 +18,44 @@ const AttributesModal = ({
   setShow,
 }: AttributesModalProps) => {
   return (
-    <div
-      className={`fixed z-40 w-screen inset-0 bg-gray-900 bg-opacity-80 ${
-        show ? "flex" : "hidden"
-      }`}
-    >
-      <div className="fixed z-50 top-0 left-1/2 -translate-x-1/2 w-auto h-screen overflow-auto layout rounded-md px-8 py-6 shadow-lg">
-        <table>
-          <thead>
-            <tr className="border border-slate-800">
-              {header &&
-                header.map((th: string) => (
-                  <th key={uuidv4()} className="p-1 border border-slate-800">
-                    {th}
-                  </th>
-                ))}
-            </tr>
-          </thead>
-          <tbody>
-            {rows &&
-              rows.map((row: string[]) => (
-                <tr key={uuidv4()} className="border border-slate-800">
-                  {row.map((td: string, i: number) => (
-                    <td
-                      key={uuidv4()}
-                      className={`text-center border border-slate-800 ${
-                        i === 0 && value === +td && "inverted font-bold"
-                      }`}
-                    >
-                      {td}
-                    </td>
+    <div className={`fixed z-40 inset-0 bg-gray-900 bg-opacity-80 ${show ? "flex" : "hidden"}`}>
+      <div className="z-50 p-4 overflow-auto w-full">
+        <div className="layout  rounded-md shadow-md p-2 flex flex-col justify-start items-center">
+          <table className="layout table-fixed">
+            <thead>
+              <tr className="border border-slate-800">
+                {header &&
+                  header.map((th: string) => (
+                    <th key={uuidv4()} className="p-1 border border-slate-800">
+                      {th}
+                    </th>
                   ))}
-                </tr>
-              ))}
-          </tbody>
-        </table>
-        <div className="my-4 w-full">
-          <Button text="Close" handler={() => setShow(false)} full />
+              </tr>
+            </thead>
+            <tbody>
+              {rows &&
+                rows.map((row: string[]) => (
+                  <tr
+                    key={row[0]}
+                    className={`border border-slate-800 ${
+                      +row[0] === value && "inverted font-bold"
+                    }`}
+                  >
+                    {row.map((td: string, i: number) => (
+                      <td
+                        key={uuidv4()}
+                        className="text-center border border-slate-800"
+                      >
+                        {td}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+          <div className="my-4 w-6/12">
+            <Button text="Close" handler={() => setShow(false)} full />
+          </div>
         </div>
       </div>
     </div>
