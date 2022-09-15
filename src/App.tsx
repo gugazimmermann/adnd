@@ -14,6 +14,7 @@ const Layout = lazy(() => import("./pages/layout/Layout"));
 const Home = lazy(() => import("./pages/home/Home"));
 const Profile = lazy(() => import("./pages/profile/Profile"));
 
+const CharacterCreationLayout = lazy(() => import("./pages/character-creation/CharacterCreationLayout"));
 const Attributes = lazy(() => import("./pages/character-creation/Attributes"));
 const Races = lazy(() => import("./pages/character-creation/Races"));
 
@@ -32,8 +33,10 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/character-creation" element={<Navigate to="/home" replace />} />
-          <Route path="/character-creation/attributes" element={<Attributes />} />
-          <Route path="/character-creation/races" element={<Races />} />
+          <Route element={<CharacterCreationLayout />}>
+            <Route path="/character-creation/attributes" element={<Attributes />} />
+            <Route path="/character-creation/races" element={<Races />} />
+          </Route>
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

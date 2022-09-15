@@ -1,20 +1,52 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState, useCallback } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import LocalStorage from "../../api/local-storage";
-import { AttributesType } from "../../ts/types";
+import { AttributesType, CharacterCreationContextType } from "../../ts/types";
 import { ATTRIBUTE } from "../../ts/enums";
-import { Button, Title } from "../../components";
 import AttributesCard from "./AttributesCard";
-
 
 export default function Attributes() {
   const navigate = useNavigate();
+  const {
+    setTitle,
+    setBack,
+    setDescription,
+    setButtonText,
+    setButtonDisabled,
+    setForward,
+  } = useOutletContext<CharacterCreationContextType>();
   const [attributes, setAttributes] = useState<AttributesType[]>([]);
   const [selectedSet, setSelectedSet] = useState<number>(99);
-  const [selectedAttributes, setSelectedAttributes] = useState<AttributesType>();
+  const [selectedAttributes, setSelectedAttributes] =
+    useState<AttributesType>();
 
-  useEffect(() => {
+  const handleSelect = (i: number) => {
+    setSelectedSet(i);
+    setSelectedAttributes(attributes[i]);
+    LocalStorage.Save("char", { attributes: attributes[i] }, true);
+  };
+
+  const setLayoutContent = useCallback(() => {
+    setTitle("Attributes");
+    setBack("/home");
+    setDescription(
+      "You need to choose one of the thre attributes sets for your character.Attributes can be changed by Race, and will reflect when select Class.\n\nEach attribute has it's table, which will be used during the game depending on the choices made by you."
+    );
+    setButtonText("Continue to Races");
+    setButtonDisabled(!selectedAttributes);
+    setForward("/character-creation/races");
+  }, [
+    selectedAttributes,
+    setBack,
+    setButtonDisabled,
+    setButtonText,
+    setDescription,
+    setForward,
+    setTitle,
+  ]);
+
+  const getAttributes = useCallback(() => {
     const getAttributes = LocalStorage.GetItem("attributes", true);
     if (!getAttributes) navigate("/home");
     const getAttr = getAttributes as AttributesType[];
@@ -27,44 +59,27 @@ export default function Attributes() {
         [ATTRIBUTE.WISDOM]: 18,
         [ATTRIBUTE.CHARISMA]: 18,
       };
-      getAttr.push(cheat);
+      if (getAttributes) getAttr.push(cheat);
     }
     setAttributes(getAttr);
-  }, [navigate]);
+  }, [navigate])
 
-  const handleSelect = (i: number) => {
-    setSelectedSet(i);
-    setSelectedAttributes(attributes[i]);
-    LocalStorage.Save("char", { attributes: attributes[i] }, true);
-  };
+  useEffect(() => {
+    setLayoutContent();
+    getAttributes();
+  }, [getAttributes, setLayoutContent]);
 
   return (
-    <section className="relative">
-      <Title
-        text="Attributes"
-        className="font-bold text-xl text-center"
-        back="/home"
-      />
-      <p className="mb-4 mt-4">
-        You need to choose one of the thre attributes sets for your character.
-        Attributes can be changed by Race, and will reflect when select Class.
-      </p>
-      <p className="mb-4">
-        Each attribute has it's table, which will be used during the game
-        depending on the choices made by you.
-      </p>
-      <div className="grid sm:grid-cols-3 gap-4 mx-8">
-        {attributes.map((attr, i) => (
-          <AttributesCard key={uuidv4()} attributes={attr} index={i} selectedSet={selectedSet} handleSelect={handleSelect} />
-        ))}
-      </div>
-      <div className="text-center mt-4 mb-4">
-        <Button
-          text="Continue to Races"
-          handler={() => navigate("/character-creation/races")}
-          disabled={!selectedAttributes}
+    <div className="grid sm:grid-cols-3 gap-4 mx-8">
+      {attributes.map((attr, i) => (
+        <AttributesCard
+          key={uuidv4()}
+          attributes={attr}
+          index={i}
+          selectedSet={selectedSet}
+          handleSelect={handleSelect}
         />
-      </div>
-    </section>
+      ))}
+    </div>
   );
 }

@@ -30,6 +30,15 @@ export type StateType = {
   alert?: AlertType;
 };
 
+export type CharacterCreationContextType = {
+  setTitle: (x: string) => void;
+  setBack: (x: string) => void;
+  setDescription: (x: string) => void;
+  setButtonText: (x: string) => void;
+  setButtonDisabled: (x: boolean) => void;
+  setForward: (x: string) => void;
+};
+
 export type AttributesType = {
   [key in ATTRIBUTE]: number;
 };
@@ -65,4 +74,5 @@ export type ContentRaceType = {
 export type CharType = {
   attributes: AttributesType,
   race: string;
+  class: string;
 }
