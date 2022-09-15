@@ -2,12 +2,28 @@ import { useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import LocalStorage from "../../api/local-storage";
 import Dices from "../../helpers/dices";
-import { AttributesType } from "../../ts/types";
+import { AttributesType, CharType } from "../../ts/types";
 import { ATTRIBUTE, DICES } from "../../ts/enums";
 import { Button, Title } from "../../components";
 
 export default function Home() {
   const navigate = useNavigate();
+
+  const createEmptyCharSheet = useCallback(() => {
+    const charSheet: CharType = {
+      attributes: {
+        [ATTRIBUTE.STRENGTH]: 1,
+        [ATTRIBUTE.DEXTERITY]: 1,
+        [ATTRIBUTE.CONSTITUTION]: 1,
+        [ATTRIBUTE.INTELLIGENCE]: 1,
+        [ATTRIBUTE.WISDOM]: 1,
+        [ATTRIBUTE.CHARISMA]: 1,
+      } as AttributesType,
+      race: "",
+      class: ""
+    }
+    LocalStorage.Save("char", charSheet, true);
+  }, []);
 
   const rowAttrs = useCallback(() => {
     const attrs: AttributesType[] = [];
@@ -27,7 +43,8 @@ export default function Home() {
   useEffect(() => {
     const attrsExists = LocalStorage.GetItem("attributes", true);
     if (!attrsExists) rowAttrs();
-  }, [rowAttrs]);
+    createEmptyCharSheet();
+  }, [createEmptyCharSheet, rowAttrs]);
 
   return (
     <section>
