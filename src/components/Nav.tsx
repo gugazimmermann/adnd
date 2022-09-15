@@ -10,7 +10,7 @@ const Nav = ({ handleSignOut }: NavProps) => {
   return (
     <header className="w-full shadow-md z-30 px-2 py-1.5">
       <div className="flex flex-wrap justify-between px-2">
-        <p className="text-2xl">{title}</p>
+        <h1 className="text-2xl">{title}</h1>
         <div className="flex flex-row">
           <Theme />
           <NavProfile handleSignOut={handleSignOut} />
