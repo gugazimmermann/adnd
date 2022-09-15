@@ -7,6 +7,7 @@ import {
 import { ATTRIBUTE } from "../../ts/enums";
 import AttributesModal from "./AttributesModal";
 import contentJson from "../../content/attributes.json";
+import { CapitalizeFirstLetter } from "../../helpers";
 
 type AttributesCardProps = {
   attributes: AttributesType;
@@ -51,7 +52,7 @@ export default function AttributesCard({
             >
               <i className="bx bx-help-circle" />
             </button>
-            {attribute}
+            {CapitalizeFirstLetter(attribute)}
           </dt>
           <dd className="relative col-span-4 p-2 text-right">
             {attributes[attribute as ATTRIBUTE]}
