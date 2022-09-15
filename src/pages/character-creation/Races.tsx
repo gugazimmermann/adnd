@@ -3,12 +3,14 @@ import { useNavigate } from "react-router-dom";
 import LocalStorage from "../../api/local-storage";
 import { CharType, ContentRaceType } from "../../ts/types";
 import { Button, Title } from "../../components";
-import contentJson from "../../content/races.json";
 import RacesCard from "./RacesCard";
+import CharacterModal from "./CharacterModal";
+import contentJson from "../../content/races.json";
 
 export default function Races() {
   const navigate = useNavigate();
   const [character, setCharacter] = useState<CharType>();
+  const [showCharModal, setShowCharModal] = useState<boolean>(false);
   const [races, setRaces] = useState<ContentRaceType[]>([]);
   const [selectedRace, setSelectedRace] = useState<number>(99);
   const [race, setRace] = useState<ContentRaceType>();
@@ -37,6 +39,11 @@ export default function Races() {
         className="font-bold text-xl text-center"
         back="/character-creation/attributes"
       />
+      <div className="absolute top-0 right-0">
+        <button type="button" onClick={() => setShowCharModal(true)}>
+          <i className="bx bx-spreadsheet text-2xl" />
+        </button>
+      </div>
       <p className="mb-4 mt-4">
         Now you need to choose your Character's Race, choose carefully, as this
         will reflect on the Class you will have to choose.
@@ -64,6 +71,12 @@ export default function Races() {
           disabled={!race}
         />
       </div>
+      {showCharModal && character && (
+        <CharacterModal
+          show={showCharModal}
+          setShow={setShowCharModal}
+        />
+      )}
     </section>
   );
 }
