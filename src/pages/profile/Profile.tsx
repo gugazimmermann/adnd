@@ -3,10 +3,15 @@ import { useOutletContext } from "react-router-dom";
 import Auth from "../../api/auth";
 import { Alert, Button, Form, Input, Title } from "../../components";
 import { isValidEmail } from "../../helpers";
+import { ALERT } from "../../ts/enums";
+import { AlertType, useOutletContextProfileProps } from '../../ts/types';
 
 export default function Profile() {
-  const { user, loadUser, setLoading } = useOutletContext();
-  const [alert, setAlert] = useState();
+  const { user, loadUser, setLoading } = useOutletContext<useOutletContextProfileProps>();
+  const [alert, setAlert] = useState<AlertType>({
+    type: undefined,
+    text: undefined,
+  });
   const [showCode, setShowCode] = useState(false);
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
@@ -19,7 +24,10 @@ export default function Profile() {
   }, [user]);
 
   const loading = () => {
-    setAlert();
+    setAlert({
+      type: undefined,
+      text: undefined,
+    });
     setLoading(true);
   };
 
@@ -28,8 +36,8 @@ export default function Profile() {
     try {
       await Auth.ChangeEmail(email);
       setShowCode(true);
-    } catch (error) {
-      setAlert({ type: "error", text: error.message });
+    } catch (error: any) {
+      setAlert({ type: ALERT.ERROR, text: error.message });
     }
     setLoading(false);
   };
@@ -40,9 +48,9 @@ export default function Profile() {
       await Auth.ConfirmChangeEmail(code);
       loadUser(true);
       setShowCode(false);
-      setAlert({ type: "success", text: "Email changed successfully!" });
-    } catch (error) {
-      setAlert({ type: "error", text: error.message });
+      setAlert({ type: ALERT.SUCCESS, text: "Email changed successfully!" });
+    } catch (error: any) {
+      setAlert({ type: ALERT.ERROR, text: error.message });
     }
     setLoading(false);
   };
@@ -51,9 +59,9 @@ export default function Profile() {
     loading();
     try {
       await Auth.ChangePassword(currentPassword, newPassword);
-      setAlert({ type: "success", text: "Password changed successfully!" });
-    } catch (error) {
-      setAlert({ type: "error", text: error.message });
+      setAlert({ type: ALERT.SUCCESS, text: "Password changed successfully!" });
+    } catch (error: any) {
+      setAlert({ type: ALERT.ERROR, text: error.message });
     }
     setLoading(false);
   };
@@ -88,8 +96,7 @@ export default function Profile() {
     <>
       <Title
         text={`Please, check your email and send the code.`}
-        color="text-amber-500"
-        size="text-sm"
+        className="text-amber-500 text-sm"
       />
       <Input type="text" placeholder="Code" value={code} handler={setCode} />
       <Button
