@@ -11,6 +11,7 @@ import {
 } from "../../ts/types";
 import { CapitalizeFirstLetter, ShowList } from "../../helpers";
 import { Button, Title } from "../../components";
+import RacesDescriptionModal from "./RacesDescriptionModal";
 import RacesAttributesModal from "./RacesAttributesModal";
 import contentJson from "../../content/races.json";
 
@@ -25,6 +26,8 @@ export default function Races() {
   >([]);
   const [selectedRace, setSelectedRace] = useState<number>(99);
   const [race, setRace] = useState<ContentRaceType>();
+  const [description, setDescription] = useState<string>("");
+  const [showDescModal, setShowDescModal] = useState<boolean>(false);
   const [showAttrModal, setShowAttrModal] = useState<boolean>(false);
 
   const getChar = useCallback(() => {
@@ -41,6 +44,7 @@ export default function Races() {
   const handleSelectRace = (i: number) => {
     setSelectedRace(i);
     setRace(races[i]);
+    LocalStorage.Save("char", { ...character, race: races[i].name }, true);
   };
 
   const handleAttrAdj = (
@@ -51,6 +55,11 @@ export default function Races() {
     });
     return adj.join(", ");
   };
+
+  const handleShowDescription = (d: string) => {
+    setDescription(d);
+    setShowDescModal(true);
+  }
 
   const handleShowAttributesAdjustments = (
     abilityAdjustments: AbilityAdjustmentsType[]
@@ -89,7 +98,16 @@ export default function Races() {
               <div className="w-10/12 flex flex-col gap-2 items-start">
                 <h2 className="font-bold text-lg">{r.name}</h2>
                 <p className="text-sm">
-                  <span className="font-bold">Description</span>: Click Here
+                  <span className="font-bold">Description</span>:{" "}
+                  <button
+                    type="button"
+                    className="cursor-pointer underline"
+                    onClick={() =>
+                      handleShowDescription(r.description)
+                    }
+                  >
+                    Click Here
+                  </button>
                 </p>
                 {!!r["ability-adjustments"].length && (
                   <p className="text-sm">
@@ -168,6 +186,13 @@ export default function Races() {
           adjustments={selectedAdjustments}
           show={showAttrModal}
           setShow={setShowAttrModal}
+        />
+      )}
+      {showDescModal && (
+        <RacesDescriptionModal
+          description={description}
+          show={showDescModal}
+          setShow={setShowDescModal}
         />
       )}
     </section>
