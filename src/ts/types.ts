@@ -14,6 +14,12 @@ export type CognitoUserType = {
   email: string;
 };
 
+export type useOutletContextProfileProps = {
+  user: CognitoUserType,
+  loadUser: (force?: boolean) => void;
+  setLoading: (loading?: boolean) => void;
+};
+
 export type useOutletContextProps = {
   setAlert: (alert: AlertType) => void;
   setTitle: (text: string) => void;
