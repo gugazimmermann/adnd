@@ -5,9 +5,9 @@ import {
   JsonContentTableType,
 } from "../../ts/types";
 import { ATTRIBUTE } from "../../ts/enums";
+import { CapitalizeFirstLetter } from "../../helpers";
 import AttributesModal from "./AttributesModal";
 import contentJson from "../../content/attributes.json";
-import { CapitalizeFirstLetter } from "../../helpers";
 
 type AttributesCardProps = {
   attributes: AttributesType;
@@ -29,7 +29,7 @@ export default function AttributesCard({
     rows: [],
   });
 
-  const showAttrTable = (attribute: string, value: number) => {
+  const showAttrTableModal = (attribute: string, value: number) => {
     const content = (contentJson as JsonContentTableType)[
       attribute.toLocaleLowerCase()
     ];
@@ -47,7 +47,7 @@ export default function AttributesCard({
               type="button"
               className="cursor-pointer mt-1"
               onClick={() => {
-                showAttrTable(attribute, attributes[attribute as ATTRIBUTE]);
+                showAttrTableModal(attribute, attributes[attribute as ATTRIBUTE]);
               }}
             >
               <i className="bx bx-help-circle" />
@@ -79,7 +79,6 @@ export default function AttributesCard({
           </div>
         </div>
       )}
-
       {showModal && (
         <AttributesModal
           value={selectedValue}
