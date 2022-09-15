@@ -3,7 +3,6 @@ import ReactMarkdown from "react-markdown";
 import {
   AbilityAdjustmentsType,
   AttributesType,
-  CharType,
   ContentRaceType,
 } from "../../ts/types";
 import { CapitalizeFirstLetter, ShowList } from "../../helpers";
@@ -12,7 +11,7 @@ import RacesAttributesModal from "./RacesAttributesModal";
 type RacesCardProps = {
   race: ContentRaceType;
   index: number;
-  character?: CharType;
+  attributes?: AttributesType;
   selectedRace: number;
   handleSelectRace: (i: number) => void;
 };
@@ -22,7 +21,7 @@ const STORAGE_PUBLIC = process.env.REACT_APP_STORAGE_PUBLIC || "";
 export default function RacesCard({
   race,
   index,
-  character,
+  attributes,
   selectedRace,
   handleSelectRace,
 }: RacesCardProps): ReactElement {
@@ -123,11 +122,11 @@ export default function RacesCard({
           </div>
         </div>
       </div>
-      {character && showAttrModal && (
+      {attributes && showAttrModal && (
         <RacesAttributesModal
           attributes={
-            character?.attributes
-              ? JSON.parse(JSON.stringify(character.attributes))
+            attributes
+              ? JSON.parse(JSON.stringify(attributes))
               : ({} as AttributesType)
           }
           adjustments={selectedAdjustments}
