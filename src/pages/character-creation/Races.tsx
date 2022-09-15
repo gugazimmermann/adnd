@@ -44,6 +44,7 @@ export default function Races() {
   const handleSelectRace = (i: number) => {
     setSelectedRace(i);
     setRace(races[i]);
+    LocalStorage.Save("char", { ...character, race: races[i].name }, true);
   };
 
   const handleAttrAdj = (
