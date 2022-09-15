@@ -8,7 +8,7 @@ const Nav = ({ handleSignOut }: NavProps) => {
   const title: string = process.env.REACT_APP_TITLE || "AD&D Solo Adventure";
 
   return (
-    <header className="w-full shadow-md z-30 px-2 py-1.5 bg-stone-50 dark:bg-stone-500 ">
+    <header className="w-full shadow-md z-30 px-2 py-1.5">
       <div className="flex flex-wrap justify-between px-2">
         <p className="text-2xl">{title}</p>
         <div className="flex flex-row">

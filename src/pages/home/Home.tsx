@@ -1,9 +1,10 @@
 import { useEffect, useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
 import LocalStorage from "../../api/local-storage";
-import { Button, Title } from "../../components";
 import Dices from "../../helpers/dices";
-import { AttributesType } from "../../interfaces";
+import { AttributesType } from '../../ts/types';
+import { ATTRIBUTE, DICES } from '../../ts/enums';
+import { Button, Title } from "../../components";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -12,12 +13,12 @@ export default function Home() {
     const attrs: AttributesType[] = [];
     for (let i = 1; i <= 3; i += 1) {
       attrs.push({
-        Strength: Dices.Row(3, "d6"),
-        Dexterity: Dices.Row(3, "d6"),
-        Constitution: Dices.Row(3, "d6"),
-        Intelligence: Dices.Row(3, "d6"),
-        Wisdom: Dices.Row(3, "d6"),
-        Charisma: Dices.Row(3, "d6"),
+        [ATTRIBUTE.STRENGTH]: Dices.Row(3, DICES.D6),
+        [ATTRIBUTE.DEXTERITY]: Dices.Row(3, DICES.D6),
+        [ATTRIBUTE.CONSTITUTION]: Dices.Row(3, DICES.D6),
+        [ATTRIBUTE.INTELLIGENCE]: Dices.Row(3, DICES.D6),
+        [ATTRIBUTE.WISDOM]: Dices.Row(3, DICES.D6),
+        [ATTRIBUTE.CHARISMA]: Dices.Row(3, DICES.D6),
       });
     }
     LocalStorage.Save('attributes', attrs, true);

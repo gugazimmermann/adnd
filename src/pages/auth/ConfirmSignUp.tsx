@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useOutletContext, useLocation } from "react-router-dom";
 import { isValidEmail } from "../../helpers";
-import { Button, Input, Link } from "../../components";
 import {
   StateType,
   useOutletContextProps,
   AlertType,
-} from "../../interfaces";
+} from "../../ts/types";
+import { Button, Input, Link } from "../../components";
 
 export default function ConfirmSignUp() {
   const location = useLocation();

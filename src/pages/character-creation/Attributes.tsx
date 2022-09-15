@@ -1,14 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { Button, Title } from "../../components";
-import {
-  AttributesType,
-  AttributeType,
-  ContentTableType,
-  JsonContentType,
-} from "../../interfaces";
 import LocalStorage from "../../api/local-storage";
+import { AttributesType, ContentTableType, JsonContentType } from "../../ts/types";
+import { ATTRIBUTE } from '../../ts/enums';
+import { Button, Title } from "../../components";
 import AttributesModal from "./AttributesModal";
 import contentJson from "../../content/attributes.json";
 
@@ -27,14 +23,24 @@ export default function Attributes() {
 
   useEffect(() => {
     const getAttributes = LocalStorage.GetItem("attributes", true);
-    if (!getAttributes) navigate('/home');
-    setAttributes(getAttributes as AttributesType[]);
+    if (!getAttributes) navigate("/home");
+    const getAttr = getAttributes as AttributesType[];
+    if (process.env.NODE_ENV === "development") {
+      const cheat = {
+        [ATTRIBUTE.STRENGTH]: 18,
+        [ATTRIBUTE.DEXTERITY]: 18,
+        [ATTRIBUTE.CONSTITUTION]: 18,
+        [ATTRIBUTE.INTELLIGENCE]: 18,
+        [ATTRIBUTE.WISDOM]: 18,
+        [ATTRIBUTE.CHARISMA]: 18,
+      };
+      getAttr.push(cheat);
+    }
+    setAttributes(getAttr);
   }, [navigate]);
 
-  const showAttrTable = (a: AttributeType, v: number) => {
-    const c = (contentJson as JsonContentType)[
-      (a as string).toLocaleLowerCase()
-    ];
+  const showAttrTable = (a: string, v: number) => {
+    const c = (contentJson as JsonContentType)[a];
     setModalContent(c);
     setSelectedValue(v);
     setShowModal(true);
@@ -43,6 +49,7 @@ export default function Attributes() {
   const handleSelectAttributes = (i: number) => {
     setSelectedSet(i);
     setSelectedAttributes(attributes[i]);
+    LocalStorage.Save('char', {attributes: attributes[i]}, true);
   };
 
   const renderRadio = (i: number) => (
@@ -69,7 +76,7 @@ export default function Attributes() {
     </div>
   );
 
-  const renderAttribute = (attr: AttributesType, a: AttributeType) => (
+  const renderAttribute = (attr: AttributesType, a: ATTRIBUTE) => (
     <div key={uuidv4()} className="grid grid-cols-12">
       <dt className="col-span-8 p-2 flex justify-start items-center gap-2 -mt-1">
         <button
@@ -109,7 +116,7 @@ export default function Attributes() {
             className="border bg-white dark:bg-stone-700 rounded-md shadow-md"
           >
             {Object.keys(attr).map((a) =>
-              renderAttribute(attr, a as AttributeType)
+              renderAttribute(attr, a as ATTRIBUTE)
             )}
             {renderRadio(i)}
           </dl>
