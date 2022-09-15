@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { isValidEmail } from "../../helpers";
+import { useOutletContextProps } from "../../ts/types";
 import { Button, Input, Link } from "../../components";
-import { useOutletContextProps } from "../../interfaces";
 
 export default function SignUp() {
   const { setAlert, setTitle, signUp }: useOutletContextProps = useOutletContext();

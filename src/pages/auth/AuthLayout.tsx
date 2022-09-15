@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import Auth from "../../api/auth";
+import { AlertType } from "../../ts/types";
+import { ALERT } from "../../ts/enums";
 import { Alert, Loading, Theme, Title } from "../../components";
-import { AlertType } from "../../interfaces";
 
 export default function AuthLayout() {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ export default function AuthLayout() {
       navigate("/home");
     } catch (err) {
       stopLoading();
-      setAlert({ type: "error", text: "Sorry, Unable to login" });
+      setAlert({ type: ALERT.ERROR, text: "Sorry, Unable to login" });
     }
   };
 
@@ -51,12 +52,12 @@ export default function AuthLayout() {
       await Auth.ForgotPassword(email);
       stopLoading();
       navigate("/redefinepassword", {
-        state: { email, alert: { type: "info", text: "Check your Email" } },
+        state: { email, alert: { type: ALERT.INFO, text: "Check your Email" } },
       });
     } catch (err) {
       stopLoading();
       setAlert({
-        type: "error",
+        type: ALERT.ERROR,
         text: "Unable to send code, email is correct?",
       });
     }
@@ -70,13 +71,13 @@ export default function AuthLayout() {
       navigate("/", {
         state: {
           email,
-          alert: { type: "success", text: "Password changed successfully!" },
+          alert: { type: ALERT.SUCCESS, text: "Password changed successfully!" },
         },
       });
     } catch (err) {
       stopLoading();
       setAlert({
-        type: "error",
+        type: ALERT.ERROR,
         text: "Unable to redifine password, email, code or new password are wrong!",
       });
     }
@@ -88,12 +89,12 @@ export default function AuthLayout() {
       await Auth.SignUp(email, pwd, getLanguage());
       stopLoading();
       navigate("/confirmsignup", {
-        state: { email, alert: { type: "info", text: "Check your Email" } },
+        state: { email, alert: { type: ALERT.INFO, text: "Check your Email" } },
       });
     } catch (err) {
       stopLoading();
       setAlert({
-        type: "error",
+        type: ALERT.ERROR,
         text: "Unable to Register, email, code or new password are wrong!",
       });
     }
@@ -107,13 +108,13 @@ export default function AuthLayout() {
       navigate("/confirmsignup", {
         state: {
           email,
-          alert: { type: "success", text: "Code Resent, Check your Email" },
+          alert: { type: ALERT.SUCCESS, text: "Code Resent, Check your Email" },
         },
       });
     } catch (err) {
       stopLoading();
       setAlert({
-        type: "error",
+        type: ALERT.ERROR,
         text: "Unable to send code, email is correct?",
       });
     }
@@ -127,13 +128,13 @@ export default function AuthLayout() {
       navigate("/", {
         state: {
           email,
-          alert: { type: "success", text: "Confirmation successful!" },
+          alert: { type: ALERT.SUCCESS, text: "Confirmation successful!" },
         },
       });
     } catch (err) {
       stopLoading();
       setAlert({
-        type: "error",
+        type: ALERT.ERROR,
         text: "Unable to confirm registration, email or code are wrong!",
       });
     }

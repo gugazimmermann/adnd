@@ -1,5 +1,5 @@
 import CryptoJS from 'crypto-js';
-import { GenericObject } from "../interfaces";
+import { GenericObject } from "../ts/types";
 
 const ls = process.env.REACT_APP_LOCALSTORAGE || "adnd_solo";
 const secret = process.env.REACT_APP_CRYPTO_SECRECT || "123";

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useOutletContext, useLocation } from "react-router-dom";
 import { isValidEmail } from "../../helpers";
+import { AlertType, StateType, useOutletContextProps } from "../../ts/types";
 import { Button, Input, Link } from "../../components";
-import { AlertType, StateType, useOutletContextProps } from "../../interfaces";
 
 export default function RedefinePassword() {
   const location = useLocation();

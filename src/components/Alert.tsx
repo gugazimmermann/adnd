@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
-import { AlertType } from "../interfaces";
+import { ALERT } from "../ts/enums";
+import { AlertType } from "../ts/types";
 
 const Alert = ({ type, text }: AlertType): ReactElement | null => {
   if (text) {
@@ -7,9 +8,9 @@ const Alert = ({ type, text }: AlertType): ReactElement | null => {
       <div
         className={`my-2 text-center font-bold
       ${!text && "hidden"} ${
-          type === "error"
+          type === ALERT.ERROR
             ? "text-orange-600"
-            : type === "info"
+            : type === ALERT.INFO
             ? "text-indigo-600"
             : "text-emerald-600"
         }`}

@@ -1,22 +1,41 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { Button, Title } from "../../components";
-import { AbilityAdjustmentsType, ContentRaceType } from "../../interfaces";
+import {
+  AbilityAdjustmentsType,
+  AttributesType,
+  CharType,
+  ContentRaceType,
+} from "../../ts/types";
 import contentJson from "../../content/races.json";
 import { CapitalizeFirstLetter, ShowList } from "../../helpers";
+import RacesAttributesModal from "./RacesAttributesModal";
+import LocalStorage from "../../api/local-storage";
 
 const STORAGE_PUBLIC = process.env.REACT_APP_STORAGE_PUBLIC || "";
 
 export default function Races() {
   const navigate = useNavigate();
+  const [character, setCharacter] = useState<CharType>();
   const [races, setRaces] = useState<ContentRaceType[]>([]);
+  const [selectedAdjustments, setSelectedAdjustments] = useState<
+    AbilityAdjustmentsType[]
+  >([]);
   const [selectedRace, setSelectedRace] = useState<number>(99);
   const [race, setRace] = useState<ContentRaceType>();
+  const [showAttrModal, setShowAttrModal] = useState<boolean>(false);
+
+  const getChar = useCallback(() => {
+    const char = LocalStorage.GetItem("char", true);
+    if (!char) navigate("/home");
+    setCharacter(char as CharType);
+  }, [navigate]);
 
   useEffect(() => {
     setRaces(contentJson);
-  }, []);
+    getChar();
+  }, [getChar]);
 
   const handleSelectRace = (i: number) => {
     setSelectedRace(i);
@@ -30,6 +49,13 @@ export default function Races() {
       return `${CapitalizeFirstLetter(a.name)}: ${a.value}`;
     });
     return adj.join(", ");
+  };
+
+  const handleShowAttributesAdjustments = (
+    abilityAdjustments: AbilityAdjustmentsType[]
+  ) => {
+    setSelectedAdjustments(abilityAdjustments);
+    setShowAttrModal(true);
   };
 
   return (
@@ -66,7 +92,13 @@ export default function Races() {
                 </p>
                 <p className="text-sm">
                   <span className="font-bold">Attributes Adjustments</span>:{" "}
-                  <button type="button" className="cursor-pointer mt-1">
+                  <button
+                    type="button"
+                    className="cursor-pointer mt-1"
+                    onClick={() =>
+                      handleShowAttributesAdjustments(r["ability-adjustments"])
+                    }
+                  >
                     <i className="bx bx-help-circle" />
                   </button>{" "}
                   {handleAttrAdj(r["ability-adjustments"])}
@@ -125,6 +157,12 @@ export default function Races() {
           disabled={!race}
         />
       </div>
+      <RacesAttributesModal
+        attributes={character?.attributes || {} as AttributesType}
+        adjustments={selectedAdjustments}
+        show={showAttrModal}
+        setShow={setShowAttrModal}
+      />
     </section>
   );
 }
