@@ -2,8 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import LocalStorage from "../../api/local-storage";
-import { AttributesType, ContentTableType, JsonContentType } from "../../ts/types";
-import { ATTRIBUTE } from '../../ts/enums';
+import {
+  AttributesType,
+  ContentTableType,
+  JsonContentType,
+} from "../../ts/types";
+import { ATTRIBUTE } from "../../ts/enums";
 import { Button, Title } from "../../components";
 import AttributesModal from "./AttributesModal";
 import contentJson from "../../content/attributes.json";
@@ -49,7 +53,7 @@ export default function Attributes() {
   const handleSelectAttributes = (i: number) => {
     setSelectedSet(i);
     setSelectedAttributes(attributes[i]);
-    LocalStorage.Save('char', {attributes: attributes[i]}, true);
+    LocalStorage.Save("char", { attributes: attributes[i] }, true);
   };
 
   const renderRadio = (i: number) => (
@@ -129,13 +133,15 @@ export default function Attributes() {
           disabled={!selectedAttributes}
         />
       </div>
-      <AttributesModal
-        value={selectedValue}
-        header={modalContent.header}
-        rows={modalContent.rows}
-        show={showModal}
-        setShow={setShowModal}
-      />
+      {showModal && (
+        <AttributesModal
+          value={selectedValue}
+          header={modalContent.header}
+          rows={modalContent.rows}
+          show={showModal}
+          setShow={setShowModal}
+        />
+      )}
     </section>
   );
 }

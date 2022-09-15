@@ -1,17 +1,18 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { Button, Title } from "../../components";
+import LocalStorage from "../../api/local-storage";
+
 import {
   AbilityAdjustmentsType,
   AttributesType,
   CharType,
   ContentRaceType,
 } from "../../ts/types";
-import contentJson from "../../content/races.json";
 import { CapitalizeFirstLetter, ShowList } from "../../helpers";
+import { Button, Title } from "../../components";
 import RacesAttributesModal from "./RacesAttributesModal";
-import LocalStorage from "../../api/local-storage";
+import contentJson from "../../content/races.json";
 
 const STORAGE_PUBLIC = process.env.REACT_APP_STORAGE_PUBLIC || "";
 
@@ -90,19 +91,23 @@ export default function Races() {
                 <p className="text-sm">
                   <span className="font-bold">Description</span>: Click Here
                 </p>
-                <p className="text-sm">
-                  <span className="font-bold">Attributes Adjustments</span>:{" "}
-                  <button
-                    type="button"
-                    className="cursor-pointer mt-1"
-                    onClick={() =>
-                      handleShowAttributesAdjustments(r["ability-adjustments"])
-                    }
-                  >
-                    <i className="bx bx-help-circle" />
-                  </button>{" "}
-                  {handleAttrAdj(r["ability-adjustments"])}
-                </p>
+                {!!r["ability-adjustments"].length && (
+                  <p className="text-sm">
+                    <span className="font-bold">Attributes Adjustments</span>:{" "}
+                    <button
+                      type="button"
+                      className="cursor-pointer mt-1"
+                      onClick={() =>
+                        handleShowAttributesAdjustments(
+                          r["ability-adjustments"]
+                        )
+                      }
+                    >
+                      <i className="bx bx-help-circle" />
+                    </button>{" "}
+                    {handleAttrAdj(r["ability-adjustments"])}
+                  </p>
+                )}
                 <p className="text-sm">
                   <span className="font-bold">Clases</span>:{" "}
                   {ShowList(r.classes)}
@@ -157,12 +162,14 @@ export default function Races() {
           disabled={!race}
         />
       </div>
-      <RacesAttributesModal
-        attributes={character?.attributes || {} as AttributesType}
-        adjustments={selectedAdjustments}
-        show={showAttrModal}
-        setShow={setShowAttrModal}
-      />
+      {showAttrModal && (
+        <RacesAttributesModal
+          attributes={character?.attributes || ({} as AttributesType)}
+          adjustments={selectedAdjustments}
+          show={showAttrModal}
+          setShow={setShowAttrModal}
+        />
+      )}
     </section>
   );
 }
