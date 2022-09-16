@@ -23,3 +23,55 @@ export enum ATTRIBUTE {
   WISDOM = "wisdom",
   CHARISMA = "charisma"
 }
+
+export enum RACES {
+  DWARF = "dwarf",
+  ELF = "elf",
+  GNOME = "gnome",
+  HALFELF = "half-elf",
+  HALFLING = "halfling",
+  HUMAN = "human"
+}
+
+export enum CLASSESTYPES {
+  WARRIOR = "warrior",
+  WIZARD = "wizard",
+  PRIEST = "priest",
+  ROGUE = "rogue",
+}
+
+export enum CLASSES {
+  BARD = "bard",
+  CLERIC = "cleric",
+  DRUID = "druid",
+  FIGHTER = "fighter",
+  ILLUSIONIST = "illusionist",
+  RANGER = "ranger",
+  MAGE = "mage",
+  THIEF = "thief",
+  PALADIN = "paladin",
+  FIGHTERCLERIC = "fighter/cleric",
+  FIGHTERDRUID = "fighter/druid",
+  FIGHTERTHIEF = "fighter/thief",
+  FIGHTERMAGE = "fighter/mage",
+  FIGHTERILLUSIONIST = "fighter/illusionist",
+  CLERICRANGER = "cleric/ranger",
+  CLERICTHIEF= "cleric/thief",
+  CLERICMAGE = "cleric/mage",
+  CLERICILLUSIONIST = "cleric/illusionist",
+  DRUIDRANGER = "druid/ranger",
+  DRUIDMAGE = "druid/mage",
+  MAGETHIEF = "mage/thief",
+  ILLUSIONISTTHIEF = "illusionist/thief",
+  FIGHTERMAGECLERIC = "fighter/mage/cleric",
+  FIGHTERMAGEDRUID = "fighter/mage/druid",
+  FIGHTERMAGETHIEF = "fighter/mage/thief"
+}
+
+export enum ALIGNMENTS {
+  GOOD = "good",
+  EVIL = "evil",
+  NEUTRAL = "neutral",
+  LAWFUL = "lawful",
+  CHAOTIC = "chaotic",
+}
