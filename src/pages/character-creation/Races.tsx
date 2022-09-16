@@ -1,13 +1,13 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import LocalStorage from "../../api/local-storage";
+import racesContent from "../../content/races";
 import {
   CharacterCreationContextType,
   CharType,
   ContentRaceType,
 } from "../../ts/types";
 import RacesCard from "./RacesCard";
-import contentJson from "../../content/races.json";
 
 export default function Races() {
   const navigate = useNavigate();
@@ -25,8 +25,8 @@ export default function Races() {
 
   const handleSelectRace = (i: number) => {
     setSelectedRace(i);
-    setRace(contentJson[i]);
-    LocalStorage.Save("char", { ...character, race: contentJson[i].name }, true);
+    setRace(racesContent[i]);
+    LocalStorage.Save("char", { ...character, race: racesContent[i].name }, true);
   };
 
   const setLayoutContent = useCallback(() => {
@@ -62,9 +62,9 @@ export default function Races() {
   return (
     <>
       <div className="grid sm:grid-cols-1 gap-4 mx-2">
-        {contentJson.map((race, index) => (
+        {racesContent.map((race, index) => (
           <RacesCard
-            key={race.name.toLocaleLowerCase()}
+            key={race.name}
             race={race}
             index={index}
             selectedRace={selectedRace}
