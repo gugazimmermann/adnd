@@ -19,8 +19,8 @@ export default function Home() {
         [ATTRIBUTE.WISDOM]: 1,
         [ATTRIBUTE.CHARISMA]: 1,
       } as AttributesType,
-      race: "",
-      class: ""
+      race: undefined,
+      class: undefined
     }
     LocalStorage.Save("char", charSheet, true);
   }, []);

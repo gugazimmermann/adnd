@@ -1,11 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
 import { Button } from "../../components";
-import { ContentTableRowType } from "../../ts/types";
 
 type AttributesModalProps = {
   value: number;
   header: string[];
-  rows: ContentTableRowType[];
+  rows: string[][];
   show: boolean;
   setShow: (show: boolean) => void;
 };

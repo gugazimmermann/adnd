@@ -1,5 +1,8 @@
-{
-  "strength": {
+import { ATTRIBUTE } from '../ts/enums';
+import { AttributesTableType } from '../ts/types';
+
+const attributesContent: AttributesTableType = {
+  [ATTRIBUTE.STRENGTH]: {
     "header": [
       "Value",
       "Hit Prob.",
@@ -42,7 +45,7 @@
       ["25", "+7", "+14", "1535", "1750", "19(18)", "99"]
     ]
   },
-  "dexterity": {
+  [ATTRIBUTE.DEXTERITY]: {
     "header": [
       "Value",
       "Reaction Adj.",
@@ -77,7 +80,7 @@
       ["25", "+5", "+5", "-6"]
     ]
   },
-  "constitution": {
+  [ATTRIBUTE.CONSTITUTION]: {
     "header": [
       "Value",
       "Hit Point Adjustment",
@@ -114,7 +117,7 @@
       ["25", "+2/+7", "100%", "100%", "+4", "1/1"]
     ]
   },
-  "intelligence": {
+  [ATTRIBUTE.INTELLIGENCE]: {
     "header": [
       "Value",
       "Languages",
@@ -151,7 +154,7 @@
       ["25", "20", "9", "100%", "All", "7"]
     ]
   },
-  "wisdom": {
+  [ATTRIBUTE.WISDOM]: {
     "header": [
       "Value",
       "Magical Defense",
@@ -229,7 +232,7 @@
       ]
     ]
   },
-  "charisma": {
+  [ATTRIBUTE.CHARISMA]: {
     "header": [
       "Value",
       "Maximum of Henchmen",
@@ -265,3 +268,5 @@
     ]
   }
 }
+
+export default attributesContent;

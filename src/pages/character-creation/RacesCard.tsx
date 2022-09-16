@@ -1,7 +1,8 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useState, useEffect, useCallback } from "react";
 import ReactMarkdown from "react-markdown";
+import { ATTRIBUTE } from "../../ts/enums";
 import {
-  AbilityAdjustmentsType,
+  AdjustementsType,
   AttributesType,
   ContentRaceType,
 } from "../../ts/types";
@@ -25,25 +26,46 @@ export default function RacesCard({
   selectedRace,
   handleSelectRace,
 }: RacesCardProps): ReactElement {
-  const [showDescription, setShowDescription] = useState<boolean>(false);
-  const [selectedAdjustments, setSelectedAdjustments] = useState<
-    AbilityAdjustmentsType[]
+  const [abilityAdjustments, setAbilityAdjustments] = useState<
+    AdjustementsType[]
   >([]);
+  const [showDescription, setShowDescription] = useState<boolean>(false);
+  const [selectedAdjustments, setSelectedAdjustments] =
+    useState<AdjustementsType[]>([]);
   const [showAttrModal, setShowAttrModal] = useState<boolean>(false);
 
-  const handleAttrAdj = (
-    abilityAdjustments: AbilityAdjustmentsType[]
-  ): string => {
-    let adj = abilityAdjustments.map((a) => {
-      return `${CapitalizeFirstLetter(a.name)}: ${a.value}`;
-    });
+  const handleAttrAdj = (abilityAdjustments: AdjustementsType[]): string => {
+    let adj = abilityAdjustments.map(
+      (a) =>
+        `${CapitalizeFirstLetter(a.name)}: ${
+          a.value > 0 ? "+" + a.value : a.value
+        }`
+    );
     return adj.join(", ");
   };
 
-  const handleAdjustments = (abilityAdjustments: AbilityAdjustmentsType[]) => {
+  const handleAdjustments = (abilityAdjustments: AdjustementsType[]) => {
     setSelectedAdjustments(abilityAdjustments);
     setShowAttrModal(true);
   };
+
+  const handleRaceAbilityAdjustments = useCallback((): void => {
+    const adjustments = Object.keys(race["ability-adjustments"])
+      .map((attr) => {
+        if (race["ability-adjustments"][attr as ATTRIBUTE] !== 0)
+          return {
+            name: attr,
+            value: race["ability-adjustments"][attr as ATTRIBUTE],
+          };
+        else return null;
+      })
+      .filter((x) => x);
+    setAbilityAdjustments(adjustments as AdjustementsType[]);
+  }, [race]);
+
+  useEffect(() => {
+    handleRaceAbilityAdjustments();
+  }, [handleRaceAbilityAdjustments]);
 
   return (
     <div className="border bg-white dark:bg-stone-700 rounded-md shadow-md p-2">
@@ -51,10 +73,12 @@ export default function RacesCard({
         <img
           src={`${STORAGE_PUBLIC}/portraits/${race.portait}.png`}
           alt={`${race.name} portrait`}
-          className="w-2/12 mr-2 object-contain"
+          className="w-2/12 mr-2 object-contain rounded-xl shadow-md"
         />
         <div className="w-10/12 flex flex-col gap-2 items-start">
-          <h2 className="font-bold text-lg">{race.name}</h2>
+          <h2 className="font-bold text-lg">
+            {CapitalizeFirstLetter(race.name)}
+          </h2>
           <p className="text-sm">
             <span className="font-bold">Description</span>:{" "}
             <button
@@ -66,17 +90,17 @@ export default function RacesCard({
             </button>
           </p>
           {showDescription && <ReactMarkdown>{race.description}</ReactMarkdown>}
-          {!!race["ability-adjustments"].length && (
+          {!!abilityAdjustments.length && (
             <p className="text-sm">
               <span className="font-bold">Attributes Adjustments</span>:{" "}
               <button
                 type="button"
                 className="cursor-pointer mt-1"
-                onClick={() => handleAdjustments(race["ability-adjustments"])}
+                onClick={() => handleAdjustments(abilityAdjustments)}
               >
                 <i className="bx bx-help-circle" />
               </button>{" "}
-              {handleAttrAdj(race["ability-adjustments"])}
+              {handleAttrAdj(abilityAdjustments)}
             </p>
           )}
           <p className="text-sm">
@@ -114,7 +138,9 @@ export default function RacesCard({
               className="form-radio h-4 w-4 rounded-sm text-red-600 bg-stone-100 border border-stone-400 focus:outline-none focus:ring-offset-0 focus:ring-0 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
             />
             <label
-              className="form-radio-label inline-block font-bold"
+              className={`form-radio-label inline-block font-bold uppercase ${
+                index === selectedRace && "text-red-600"
+              }`}
               htmlFor="attributesSet"
             >
               Play as a {race.name}
