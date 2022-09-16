@@ -71,7 +71,7 @@ export default function RacesCard({
     <div className="border bg-white dark:bg-stone-700 rounded-md shadow-md p-2">
       <div className="flex flex-row items-start">
         <img
-          src={`${STORAGE_PUBLIC}/portraits/${race.portait}.png`}
+          src={`${STORAGE_PUBLIC}/portraits/${race.portrait}.png`}
           alt={`${race.name} portrait`}
           className="w-2/12 mr-2 object-contain rounded-xl shadow-md"
         />

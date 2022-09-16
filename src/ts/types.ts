@@ -1,4 +1,4 @@
-import { ALERT, ATTRIBUTE, RACES, CLASSES } from './enums';
+import { ALERT, ATTRIBUTE, RACES, CLASSES, CLASSESTYPES, ALIGNMENTS } from './enums';
 
 export type GenericObject = { [key: string]: any };
 
@@ -59,13 +59,17 @@ export type AdjustementsType = {
   value: number;
 }
 
+export type RequirementType = {
+  name: ATTRIBUTE;
+  value: number;
+}
 
 export type AttributesType = {
   [key in ATTRIBUTE]: number;
 };
 
 export type ContentRaceType = {
-  portait: string;
+  portrait: string;
   name: RACES;
   description: string;
   "ability-adjustments": AttributesType,
@@ -74,6 +78,19 @@ export type ContentRaceType = {
   advantages: string[];
   disadvantages: string[];
   "favorite-enemies": string[];
+}
+
+export type ContentClassesType = {
+  type: CLASSESTYPES;
+  portrait: string;
+  name: CLASSES;
+  description: string;
+  requisites: ATTRIBUTE[];
+  requiremt: AttributesType;
+  races: RACES[];
+  alignments: ALIGNMENTS[];
+  advantages: string[];
+  disadvantages: string[];
 }
 
 export type CharType = {
