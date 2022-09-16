@@ -62,11 +62,11 @@ export default function Races() {
   return (
     <>
       <div className="grid sm:grid-cols-1 gap-4 mx-2">
-        {racesContent.map((race, index) => (
+        {racesContent.map((r, i) => (
           <RacesCard
-            key={race.name}
-            race={race}
-            index={index}
+            key={r.name}
+            race={r}
+            index={i}
             selectedRace={selectedRace}
             handleSelectRace={handleSelectRace}
             attributes={character?.attributes}

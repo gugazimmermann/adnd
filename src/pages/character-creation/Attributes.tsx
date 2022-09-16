@@ -71,10 +71,10 @@ export default function Attributes() {
 
   return (
     <div className="grid sm:grid-cols-3 gap-4 mx-8">
-      {attributes.map((attr, i) => (
+      {attributes.map((a, i) => (
         <AttributesCard
           key={uuidv4()}
-          attributes={attr}
+          attributes={a}
           index={i}
           selectedSet={selectedSet}
           handleSelect={handleSelect}
