@@ -1,4 +1,4 @@
-import { ALERT, ATTRIBUTE } from './enums';
+import { ALERT, ATTRIBUTE, RACES, CLASSES } from './enums';
 
 export type GenericObject = { [key: string]: any };
 
@@ -45,32 +45,31 @@ export type CharacterCreationContextType = {
   setForward: (x: string) => void;
 };
 
+export type TableType = {
+  header: string[];
+  rows: string[][];
+};
+
+export type AttributesTableType = {
+  [key in ATTRIBUTE]: TableType;
+};
+
+export type AdjustementsType = {
+  name: ATTRIBUTE;
+  value: number;
+}
+
+
 export type AttributesType = {
   [key in ATTRIBUTE]: number;
 };
 
-export type ContentTableRowType = string[];
-
-export type ContentTableType = {
-  header: string[];
-  rows: ContentTableRowType[];
-};
-
-export type JsonContentTableType = {
-  [key: string]: ContentTableType;
-};
-
-export type AbilityAdjustmentsType = {
-  name: string;
-  value: string;
-}
-
 export type ContentRaceType = {
   portait: string;
-  name: string;
+  name: RACES;
   description: string;
-  "ability-adjustments": AbilityAdjustmentsType[],
-  classes: string[];
+  "ability-adjustments": AttributesType,
+  classes: CLASSES[];
   languages: string[];
   advantages: string[];
   disadvantages: string[];
@@ -79,6 +78,6 @@ export type ContentRaceType = {
 
 export type CharType = {
   attributes: AttributesType,
-  race: string;
-  class: string;
+  race: RACES | undefined;
+  class: CLASSES | undefined;
 }
