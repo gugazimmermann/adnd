@@ -59,6 +59,10 @@ export type AdjustementsType = {
   value: number;
 }
 
+export type RequirementType = {
+  name: ATTRIBUTE;
+  value: number;
+}
 
 export type AttributesType = {
   [key in ATTRIBUTE]: number;
