@@ -1,13 +1,12 @@
 import { useState } from "react";
 import {
-  AttributesType,
-  ContentTableType,
-  JsonContentTableType,
+  AttributesTableType,
+  AttributesType, TableType,
 } from "../../ts/types";
 import { ATTRIBUTE } from "../../ts/enums";
 import { CapitalizeFirstLetter } from "../../helpers";
 import AttributesModal from "./AttributesModal";
-import contentJson from "../../content/attributes.json";
+import attributesContent from "../../content/attributes";
 
 type AttributesCardProps = {
   attributes: AttributesType;
@@ -24,15 +23,13 @@ export default function AttributesCard({
 }: AttributesCardProps) {
   const [selectedValue, setSelectedValue] = useState<number>(0);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [modalContent, setModalContent] = useState<ContentTableType>({
+  const [modalContent, setModalContent] = useState<TableType>({
     header: [],
     rows: [],
   });
 
-  const showAttrTableModal = (attribute: string, value: number) => {
-    const content = (contentJson as JsonContentTableType)[
-      attribute.toLocaleLowerCase()
-    ];
+  const showAttrTableModal = (attribute: ATTRIBUTE, value: number) => {
+    const content = (attributesContent as AttributesTableType)[attribute as ATTRIBUTE];
     setModalContent(content);
     setSelectedValue(value);
     setShowModal(true);
@@ -47,7 +44,7 @@ export default function AttributesCard({
               type="button"
               className="cursor-pointer mt-1"
               onClick={() => {
-                showAttrTableModal(attribute, attributes[attribute as ATTRIBUTE]);
+                showAttrTableModal(attribute as ATTRIBUTE, attributes[attribute as ATTRIBUTE]);
               }}
             >
               <i className="bx bx-help-circle" />
