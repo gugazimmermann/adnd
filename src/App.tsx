@@ -17,6 +17,7 @@ const Profile = lazy(() => import("./pages/profile/Profile"));
 const CharacterCreationLayout = lazy(() => import("./pages/character-creation/CharacterCreationLayout"));
 const Attributes = lazy(() => import("./pages/character-creation/Attributes"));
 const Races = lazy(() => import("./pages/character-creation/Races"));
+const Classes = lazy(() => import("./pages/character-creation/Classes"));
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route element={<CharacterCreationLayout />}>
             <Route path="/character-creation/attributes" element={<Attributes />} />
             <Route path="/character-creation/races" element={<Races />} />
+            <Route path="/character-creation/classes" element={<Classes />} />
           </Route>
         </Route>
         <Route path="*" element={<NotFound />} />
